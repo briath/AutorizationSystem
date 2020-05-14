@@ -91,7 +91,7 @@ class UserController extends AppController
         $posted_values = ['user_login'=>'', 'email'=>'', 'user_password'=>'', 'confirm'=>'', 'user_photo' => '', 'user_name' => '', 'user_birthday' => '', 'about_myself' => ''];
         if($_POST){
             $posted_values = $this->posted_values($_POST);
-            if($_FILES){
+            if($_FILES['img']['name'][0]){
                 $file['filename'] = $_FILES['img']['name'];
                 $file['filesize'] = $_FILES['img']['size'];
                 $file['filetype'] = $_FILES['img']['type'];

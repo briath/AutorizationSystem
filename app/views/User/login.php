@@ -13,9 +13,6 @@
             <input type="password" name="user_password" id="user_password" class="form-control">
         </div>
         <div class="form-group">
-            <label for="remember_me"><?= $this->__('remember_me'); ?><input type="checkbox" id="remember_me" name="remember_me" value="on"></label>
-        </div>
-        <div class="form-group">
             <input type="submit" value="<?= $this->__('button_log_in'); ?>" class="btn btn-large btn-primary">
         </div>
         <div class="text-right">

@@ -6,7 +6,6 @@ define('WWW', __DIR__);
 
 require '../config/config.php';
 require '../vendor/autoload.php';
-require '../vendor/libs/functions.php';
 
 \vendor\core\DB::getInstance();
 \vendor\core\App::start();

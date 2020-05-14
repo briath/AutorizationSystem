@@ -19,8 +19,13 @@ class User_info extends Model
      * Файл храниться на сервере путь public/images/user_photo/ в папке с название id пользователя
      */
     public function registerNewUser($source){
+        foreach ($source as $k => $v){
+            if(empty($source[$k])){
+                unset($source[$k]);
+            }
+        }
         $this->insert($source);
-        if($_FILES){
+        if($_FILES['img']['name'][0]){
             mkdir(WWW . '/images/user_photo/' . $source['user_id']);
             copy($_FILES['img']['tmp_name'][0],WWW . '/images/user_photo/' . $source['user_id'] . '/' . $_FILES['img']['name'][0]);
         }
