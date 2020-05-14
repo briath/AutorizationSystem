@@ -42,9 +42,8 @@ class Router
                 }
                 if(!isset($route['action']))
                     $route['action'] = 'index';
-
+                $route['controller'] = self::upperSimbols($route['controller']);
                 self::$_route = $route;
-                debug(self::$_route);
                 return true;
             }
         }
@@ -55,24 +54,27 @@ class Router
      * Принимает URL и перенаправляет на нужный контроллер
      * @param string $url - входящий url
      */
-    public static function submit($url) {
+    public static function submit() {
+        $url = self::removeQueryString($_SERVER['QUERY_STRING']);
         if(self::searchRoute($url)){
-            $controller_name = 'app\controllers\\' . self::upperSimbols(self::$_route['controller']);
+            $controller_name = 'app\controllers\\' . self::$_route['controller'] . 'Controller';
             if(class_exists($controller_name)){
-                $controller = new $controller_name;
+                $controller = new $controller_name(self::$_route);
                 $action = self::lowerSimbol(self::$_route['action']) . 'Action';
                 if(method_exists($controller, $action)){
                     $controller->$action();
+                    $controller->getView();
                 } else {
-                    echo 'error1';
+                    http_response_code(404);
+                    include '404.html';
                 }
             } else {
-                echo 'error';
+                http_response_code(404);
+                include '404.html';
             }
         } else {
             http_response_code(404);
-            echo 404;
-            #include '404.html';
+            include '404.html';
         }
     }
 
@@ -82,5 +84,26 @@ class Router
 
     protected static function lowerSimbol($name){
         return lcfirst(self::upperSimbols($name));
+    }
+
+    protected static function removeQueryString($url){
+        if($url){
+            $params = explode('&', $url, 2);
+            if(false === strpos($params[0], '='))
+                return rtrim($params[0], '/');
+            else
+                return '';
+        }
+        return $url;
+    }
+
+    public static function redirect($http = false){
+        if($http){
+            $redirect = $http;
+        } else {
+            $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
+        }
+        header("Location: $redirect");
+        exit();
     }
 }

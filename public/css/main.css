@@ -1,0 +1,30 @@
+
+[data-toggle="collapse"]:after {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f0d8";
+    transform: rotate(0deg) ;
+    transition: all linear 0.25s;
+}
+[data-toggle="collapse"].collapsed:after {
+    transform: rotate(180deg) ;
+}
+
+.required:before{
+    font-family: FontAwesome;
+    size: A3;
+    content: "\f005";
+}
+
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+
+body {
+    background: gray;
+}
